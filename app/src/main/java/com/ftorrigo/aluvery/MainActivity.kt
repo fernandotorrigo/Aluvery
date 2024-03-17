@@ -1,14 +1,12 @@
 package com.ftorrigo.aluvery
 
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.ftorrigo.aluvery.ui.theme.AluveryTheme
 
@@ -17,9 +15,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             AluveryTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                    Greeting("Android")
+                Surface {
+                    MyFirstComposable()
                 }
             }
         }
@@ -27,17 +24,22 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-            text = "Hello $name!",
-            modifier = modifier
-    )
+fun MyFirstComposable(){
+    Text(text = "My first Composablee")
+    Text(text = "My first Composableee Maior")
 }
 
-@Preview(showBackground = true)
+@Preview(
+    name =  "TextPreview",
+    showBackground = true,
+    uiMode = Configuration.UI_MODE_NIGHT_YES
+
+)
 @Composable
-fun GreetingPreview() {
+fun MyFirstComposablePreview(){
     AluveryTheme {
-        Greeting("Android")
+        Surface {
+            MyFirstComposable()
+        }
     }
 }
