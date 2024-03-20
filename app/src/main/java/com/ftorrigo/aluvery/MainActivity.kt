@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
@@ -21,6 +22,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -46,10 +48,26 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            AluveryTheme {
-                Surface {
-                    ProductSection()
-                }
+            App()
+        }
+    }
+}
+
+@Composable
+fun App() {
+    AluveryTheme {
+        Surface {
+            Column(
+                Modifier
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState()),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                Spacer(Modifier)
+                ProductSection()
+                ProductSection()
+                ProductSection()
+                Spacer(Modifier)
             }
         }
     }
@@ -119,15 +137,14 @@ fun ProductSection() {
     Column {
         Text(
             text = "Promoções",
-            Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp),
+            Modifier.padding(start = 16.dp),
             fontSize = 20.sp,
             fontWeight = FontWeight(400)
         )
         Row(
             Modifier
                 .padding(
-                    top = 8.dp,
-                    bottom = 16.dp
+                    top = 8.dp
                 )
                 .fillMaxWidth()
                 .horizontalScroll(rememberScrollState()),
@@ -165,4 +182,10 @@ fun ProductSection() {
 @Composable
 private fun ProductItemPreview() {
     ProductSection()
+}
+
+@Preview(showSystemUi = true)
+@Composable
+fun AppPreview() {
+    App()
 }
