@@ -1,12 +1,13 @@
 # Aluvery
 
 Initial activity
-![image](https://github.com/fernandotorrigo/Aluvery/assets/19911585/d4c4f717-1b9f-4481-a366-03ff09662b70)
+![Screenshot_20240325_204339](https://github.com/fernandotorrigo/Aluvery/assets/19911585/4b3e11c3-478d-4bc0-8900-e843ff6d2812)
+
 
 On search product with description
-![image](https://github.com/fernandotorrigo/Aluvery/assets/19911585/ac061172-005d-4a6a-9efd-493c225296c4)
+![Screenshot_20240325_204304](https://github.com/fernandotorrigo/Aluvery/assets/19911585/0df92cc1-2d49-46b5-9a90-a7d8dfc68bf5)
+
 
 
 On search product:
-![image](https://github.com/fernandotorrigo/Aluvery/assets/19911585/0b1dd7f4-cc0b-4690-b6d4-8a8c887c2111)
-
+![Screenshot_20240325_204451](https://github.com/fernandotorrigo/Aluvery/assets/19911585/59b337fe-7cbd-4034-94ed-1b96618d9db9)
