@@ -38,6 +38,12 @@ fun HomeScreen(
 
     Column {
         var text by remember { mutableStateOf(searchText) }
+        val filteredProducts = remember(text) {
+            sampleProducts.filter { product ->
+                product.name.contains(text, true) ||
+                        product.description?.contains(text, true) ?: false
+            }
+        }
 
         OutlinedTextField(
             value = text,
@@ -79,7 +85,7 @@ fun HomeScreen(
                     }
                 }
             } else {
-                items(sampleProducts) { p ->
+                items(filteredProducts) { p ->
                     CardProductItem(product = p, Modifier.padding(horizontal = 16.dp))
                 }
             }
