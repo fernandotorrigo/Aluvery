@@ -19,9 +19,11 @@ import com.ftorrigo.aluvery.ui.theme.AluveryTheme
 
 @Composable
 fun ProductSection(
-    title: String, productsList: List<Product>
+    title: String,
+    productsList: List<Product>,
+    modifier: Modifier = Modifier
 ) {
-    Column {
+    Column(modifier) {
         Text(
             text = title,
             Modifier.padding(start = 16.dp),
