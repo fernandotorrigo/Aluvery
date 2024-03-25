@@ -1,5 +1,6 @@
 package com.ftorrigo.aluvery.ui.screens
 
+import ProductSection
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -31,11 +32,12 @@ import com.ftorrigo.aluvery.ui.theme.AluveryTheme
 
 @Composable
 fun HomeScreen(
-    sections: Map<String, List<Product>>
+    sections: Map<String, List<Product>>,
+    searchText: String = ""
 ) {
 
     Column {
-        var text by remember { mutableStateOf("") }
+        var text by remember { mutableStateOf(searchText) }
 
         OutlinedTextField(
             value = text,
@@ -64,26 +66,23 @@ fun HomeScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp),
             contentPadding = PaddingValues(vertical = 16.dp)
         ) {
-            items(sampleProducts) { p ->
-                CardProductItem(product = p, Modifier.padding(horizontal = 16.dp))
+
+            if (text.isBlank()) {
+                for (section in sections) {
+                    val title = section.key
+                    val products = section.value
+                    item {
+                        ProductSection(
+                            title = title,
+                            productsList = products
+                        )
+                    }
+                }
+            } else {
+                items(sampleProducts) { p ->
+                    CardProductItem(product = p, Modifier.padding(horizontal = 16.dp))
+                }
             }
-//            item {
-//                Spacer(Modifier)
-//            }
-//            for (section in sections) {
-//                val title = section.key
-//                val products = section.value
-//                item {
-//                    ProductSection(
-//                        title = title,
-//                        productsList = products
-//                    )
-//                }
-//
-//            }
-//            item {
-//                Spacer(Modifier)
-//            }
         }
     }
 
@@ -95,6 +94,16 @@ private fun HomeScreenPreview() {
     AluveryTheme {
         Surface {
             HomeScreen(sampleSections)
+        }
+    }
+}
+
+@Preview(showSystemUi = true)
+@Composable
+private fun HomeScreenWithSearchTextPreview() {
+    AluveryTheme {
+        Surface {
+            HomeScreen(sampleSections, searchText = "a")
         }
     }
 }
