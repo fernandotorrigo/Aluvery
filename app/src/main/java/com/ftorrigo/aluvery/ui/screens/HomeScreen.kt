@@ -5,17 +5,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -28,6 +21,7 @@ import br.com.alura.aluvery.sampledata.sampleProducts
 import br.com.alura.aluvery.sampledata.sampleSections
 import com.ftorrigo.aluvery.model.Product
 import com.ftorrigo.aluvery.ui.components.CardProductItem
+import com.ftorrigo.aluvery.ui.components.SearchTextField
 import com.ftorrigo.aluvery.ui.theme.AluveryTheme
 
 @Composable
@@ -37,7 +31,13 @@ fun HomeScreen(
 ) {
 
     Column {
-        var text by remember { mutableStateOf(searchText) }
+        var text by remember {
+            mutableStateOf(searchText)
+        }
+        SearchTextField(searchText = text, onSearchChange = {
+            text = it
+        })
+
         val filteredProducts = remember(text) {
             sampleProducts.filter { product ->
                 product.name.contains(text, true) ||
@@ -45,27 +45,6 @@ fun HomeScreen(
             }
         }
 
-        OutlinedTextField(
-            value = text,
-            onValueChange = { text = it },
-            Modifier
-                .padding(
-                    start = 16.dp,
-                    top = 16.dp,
-                    end = 16.dp,
-                )
-                .fillMaxWidth(),
-            shape = RoundedCornerShape(100),
-            leadingIcon = {
-                Icon(Icons.Default.Search, contentDescription = "Icone search")
-            },
-            label = {
-                Text(text = "Produto")
-            },
-            placeholder = {
-                Text(text = "O que voçê espera?")
-            }
-        )
         LazyColumn(
             Modifier
                 .fillMaxSize(),
