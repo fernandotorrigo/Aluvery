@@ -1,5 +1,4 @@
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -15,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.alura.aluvery.sampledata.sampleProducts
 import com.ftorrigo.aluvery.model.Product
+import com.ftorrigo.aluvery.ui.components.Section
 import com.ftorrigo.aluvery.ui.theme.AluveryTheme
 
 @Composable
@@ -23,31 +23,34 @@ fun ProductSection(
     productsList: List<Product>,
     modifier: Modifier = Modifier
 ) {
-    Column(modifier) {
-        Text(
-            text = title,
-            Modifier.padding(start = 16.dp),
-            fontSize = 20.sp,
-            fontWeight = FontWeight(400)
-        )
-        LazyRow(
-            Modifier
-                .padding(
-                    top = 8.dp
-                )
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
-            contentPadding = PaddingValues(
-                horizontal = 16.dp
+
+    Section(
+        title = {
+            Text(
+                text = title,
+                Modifier.padding(
+                    start = 16.dp,
+                    end = 16.dp
+                ),
+                fontSize = 20.sp,
+                fontWeight = FontWeight(400)
             )
-        ) {
-
-            items(productsList) { p ->
-                ProductItem(product = p)
-
+        }, content = {
+            LazyRow(
+                Modifier
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                contentPadding = PaddingValues(horizontal = 16.dp)
+            ) {
+                items(productsList) { p ->
+                    ProductItem(product = p)
+                }
             }
-        }
-    }
+        },
+        modifier = modifier
+    )
+
+
 }
 
 @Preview
