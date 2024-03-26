@@ -19,8 +19,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.com.alura.aluvery.sampledata.sampleProducts
 import br.com.alura.aluvery.sampledata.sampleSections
+import br.com.alura.aluvery.sampledata.sampleShopSections
 import com.ftorrigo.aluvery.model.Product
 import com.ftorrigo.aluvery.ui.components.CardProductItem
+import com.ftorrigo.aluvery.ui.components.PartnersSection
 import com.ftorrigo.aluvery.ui.components.SearchTextField
 import com.ftorrigo.aluvery.ui.theme.AluveryTheme
 
@@ -61,6 +63,14 @@ fun HomeScreen(
                             title = title,
                             productsList = products
                         )
+                    }
+                }
+
+                for (shopSections in sampleShopSections) {
+                    val title = shopSections.key
+                    val shop = shopSections.value
+                    item {
+                        PartnersSection(title = title, shop = shop)
                     }
                 }
             } else {
