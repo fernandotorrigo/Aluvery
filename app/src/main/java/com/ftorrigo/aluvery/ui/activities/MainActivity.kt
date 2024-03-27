@@ -1,4 +1,4 @@
-package com.ftorrigo.aluvery
+package com.ftorrigo.aluvery.ui.activities
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
