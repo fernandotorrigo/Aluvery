@@ -10,14 +10,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import br.com.alura.aluvery.sampledata.sampleProducts
 import br.com.alura.aluvery.sampledata.sampleSections
 import br.com.alura.aluvery.sampledata.sampleShopSections
 import com.ftorrigo.aluvery.model.Product
@@ -28,26 +23,13 @@ import com.ftorrigo.aluvery.ui.theme.AluveryTheme
 
 class HomeScreenUiState(
     val sections: Map<String, List<Product>> = emptyMap(),
-    searchText: String = ""
+    val filteredProducts: List<Product> = emptyList(),
+    val products: List<Product> = emptyList(),
+    val searchText: String = "",
+    val onSearchChange: (String) -> Unit = {}
 ) {
-    var text by mutableStateOf(searchText)
-        private set
-
-    val filteredProducts
-        get() = if (text.isNotBlank()) {
-            sampleProducts.filter { product ->
-                product.name.contains(text, true) || product.description?.contains(
-                    text, true
-                ) ?: false
-            }
-        } else emptyList()
-
     fun isShowSections(): Boolean {
-        return text.isBlank()
-    }
-
-    val onSearchChange: (String) -> Unit = {
-        text = it
+        return searchText.isBlank()
     }
 }
 
@@ -57,8 +39,8 @@ fun HomeScreen(
 ) {
 
     val sections = state.sections
-    val text = state.text
-    val filteredProducts = remember(text) { state.filteredProducts }
+    val text = state.searchText
+    val filteredProducts = state.filteredProducts
 
     Column {
 
