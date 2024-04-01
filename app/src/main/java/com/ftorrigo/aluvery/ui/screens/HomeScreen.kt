@@ -26,42 +26,57 @@ import com.ftorrigo.aluvery.ui.components.PartnersSection
 import com.ftorrigo.aluvery.ui.components.SearchTextField
 import com.ftorrigo.aluvery.ui.theme.AluveryTheme
 
+class HomeScreenUiState(searchText: String = "") {
+    var text by mutableStateOf(searchText)
+        private set
+
+    val filteredProducts
+        get() = if (text.isNotBlank()) {
+            sampleProducts.filter { product ->
+                product.name.contains(text, true) || product.description?.contains(
+                    text, true
+                ) ?: false
+            }
+        } else emptyList()
+
+    fun isShowSections(): Boolean {
+        return text.isBlank()
+    }
+
+    val onSearchChange: (String) -> Unit = {
+        text = it
+    }
+}
+
 @Composable
 fun HomeScreen(
     sections: Map<String, List<Product>>,
-    searchText: String = ""
+    state: HomeScreenUiState = HomeScreenUiState()
 ) {
 
-    Column {
-        var text by remember {
-            mutableStateOf(searchText)
-        }
-        SearchTextField(searchText = text, onSearchChange = {
-            text = it
-        })
+    val text = state.text
+    val filteredProducts = remember(text) { state.filteredProducts }
 
-        val filteredProducts = remember(text) {
-            sampleProducts.filter { product ->
-                product.name.contains(text, true) ||
-                        product.description?.contains(text, true) ?: false
-            }
-        }
+    Column {
+
+        SearchTextField(
+            searchText = text,
+            onSearchChange = state.onSearchChange
+        )
 
         LazyColumn(
-            Modifier
-                .fillMaxSize(),
+            Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(16.dp),
             contentPadding = PaddingValues(vertical = 16.dp)
         ) {
 
-            if (text.isBlank()) {
+            if (state.isShowSections()) {
                 for (section in sections) {
                     val title = section.key
                     val products = section.value
                     item {
                         ProductSection(
-                            title = title,
-                            productsList = products
+                            title = title, productsList = products
                         )
                     }
                 }
@@ -98,7 +113,7 @@ private fun HomeScreenPreview() {
 private fun HomeScreenWithSearchTextPreview() {
     AluveryTheme {
         Surface {
-            HomeScreen(sampleSections, searchText = "a")
+            HomeScreen(sampleSections, state = HomeScreenUiState(searchText = "a"))
         }
     }
 }
