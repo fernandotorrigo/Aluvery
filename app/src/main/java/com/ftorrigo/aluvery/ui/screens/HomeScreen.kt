@@ -26,7 +26,10 @@ import com.ftorrigo.aluvery.ui.components.PartnersSection
 import com.ftorrigo.aluvery.ui.components.SearchTextField
 import com.ftorrigo.aluvery.ui.theme.AluveryTheme
 
-class HomeScreenUiState(searchText: String = "") {
+class HomeScreenUiState(
+    val sections: Map<String, List<Product>> = emptyMap(),
+    searchText: String = ""
+) {
     var text by mutableStateOf(searchText)
         private set
 
@@ -50,18 +53,17 @@ class HomeScreenUiState(searchText: String = "") {
 
 @Composable
 fun HomeScreen(
-    sections: Map<String, List<Product>>,
     state: HomeScreenUiState = HomeScreenUiState()
 ) {
 
+    val sections = state.sections
     val text = state.text
     val filteredProducts = remember(text) { state.filteredProducts }
 
     Column {
 
         SearchTextField(
-            searchText = text,
-            onSearchChange = state.onSearchChange
+            searchText = text, onSearchChange = state.onSearchChange
         )
 
         LazyColumn(
@@ -103,7 +105,7 @@ fun HomeScreen(
 private fun HomeScreenPreview() {
     AluveryTheme {
         Surface {
-            HomeScreen(sampleSections)
+            HomeScreen(HomeScreenUiState(sections = sampleSections))
         }
     }
 }
@@ -113,7 +115,12 @@ private fun HomeScreenPreview() {
 private fun HomeScreenWithSearchTextPreview() {
     AluveryTheme {
         Surface {
-            HomeScreen(sampleSections, state = HomeScreenUiState(searchText = "a"))
+            HomeScreen(
+                state = HomeScreenUiState(
+                    searchText = "a",
+                    sections = sampleSections
+                )
+            )
         }
     }
 }

@@ -40,10 +40,10 @@ class MainActivity : ComponentActivity() {
                     "Doces" to sampleCandies,
                     "Bebidas" to sampleDrinks
                 )
-                val state = remember {
+                val state = remember(sections) {
                     HomeScreenUiState()
                 }
-                HomeScreen(sections = sections, state = state)
+                HomeScreen(state = state)
             }
         }
     }
@@ -71,6 +71,6 @@ fun App(onFabClick: () -> Unit = {}, content: @Composable () -> Unit = {}) {
 @Composable
 private fun AppPreview() {
     App {
-        HomeScreen(sections = sampleSections)
+        HomeScreen(HomeScreenUiState(sections = sampleSections))
     }
 }
