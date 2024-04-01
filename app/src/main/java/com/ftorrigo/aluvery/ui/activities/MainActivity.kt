@@ -14,8 +14,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import br.com.alura.aluvery.sampledata.sampleCandies
 import br.com.alura.aluvery.sampledata.sampleDrinks
+import br.com.alura.aluvery.sampledata.sampleSections
 import com.ftorrigo.aluvery.dao.ProductDao
 import com.ftorrigo.aluvery.ui.screens.HomeScreen
 import com.ftorrigo.aluvery.ui.theme.AluveryTheme
@@ -57,5 +59,13 @@ fun App(onFabClick: () -> Unit = {}, content: @Composable () -> Unit = {}) {
 
             }
         }
+    }
+}
+
+@Preview
+@Composable
+private fun AppPreview() {
+    App {
+        HomeScreen(sections = sampleSections)
     }
 }
