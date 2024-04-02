@@ -13,18 +13,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import br.com.alura.aluvery.sampledata.sampleCandies
-import br.com.alura.aluvery.sampledata.sampleDrinks
-import br.com.alura.aluvery.sampledata.sampleProducts
 import br.com.alura.aluvery.sampledata.sampleSections
 import com.ftorrigo.aluvery.dao.ProductDao
-import com.ftorrigo.aluvery.model.Product
 import com.ftorrigo.aluvery.ui.screens.HomeScreen
 import com.ftorrigo.aluvery.ui.screens.HomeScreenUiState
 import com.ftorrigo.aluvery.ui.theme.AluveryTheme
@@ -38,43 +30,7 @@ class MainActivity : ComponentActivity() {
             App(onFabClick = {
                 startActivity(Intent(this, ProductFormActivity::class.java))
             }) {
-                val products = dao.products()
-                val sections = mapOf(
-                    "Todos produtos" to products,
-                    "Promoções" to sampleDrinks + sampleCandies,
-                    "Doces" to sampleCandies,
-                    "Bebidas" to sampleDrinks
-                )
-                var text by remember {
-                    mutableStateOf("")
-                }
-
-                fun containsInNameOrDescription() = { product: Product ->
-                    product.name.contains(text, true) || product.description?.contains(
-                        text, true
-                    ) ?: false
-                }
-
-                val filteredProducts = remember(text, products) {
-                    if (text.isNotBlank()) {
-                        sampleProducts.filter(containsInNameOrDescription()) + products.filter(
-                            containsInNameOrDescription()
-                        )
-                    } else emptyList()
-                }
-
-                val state = remember(products, text) {
-                    HomeScreenUiState(
-                        sections = sections,
-                        filteredProducts = filteredProducts,
-                        products = products,
-                        searchText = text,
-                        onSearchChange = {
-                            text = it
-                        }
-                    )
-                }
-                HomeScreen(state = state)
+                HomeScreen(products = dao.products())
             }
         }
     }
