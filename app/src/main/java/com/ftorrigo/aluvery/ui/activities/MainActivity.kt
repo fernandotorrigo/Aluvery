@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -20,6 +21,7 @@ import com.ftorrigo.aluvery.dao.ProductDao
 import com.ftorrigo.aluvery.ui.screens.HomeScreen
 import com.ftorrigo.aluvery.ui.screens.HomeScreenUiState
 import com.ftorrigo.aluvery.ui.theme.AluveryTheme
+import com.ftorrigo.aluvery.viewmodels.HomeScreenViewModel
 
 class MainActivity : ComponentActivity() {
 
@@ -30,7 +32,8 @@ class MainActivity : ComponentActivity() {
             App(onFabClick = {
                 startActivity(Intent(this, ProductFormActivity::class.java))
             }) {
-                HomeScreen(products = dao.products())
+                val viewModel by viewModels<HomeScreenViewModel>()
+                HomeScreen(viewModel = viewModel, products = dao.products())
             }
         }
     }

@@ -12,7 +12,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -28,6 +27,7 @@ import com.ftorrigo.aluvery.ui.components.CardProductItem
 import com.ftorrigo.aluvery.ui.components.PartnersSection
 import com.ftorrigo.aluvery.ui.components.SearchTextField
 import com.ftorrigo.aluvery.ui.theme.AluveryTheme
+import com.ftorrigo.aluvery.viewmodels.HomeScreenViewModel
 
 class HomeScreenUiState(
     val sections: Map<String, List<Product>> = emptyMap(),
@@ -42,7 +42,10 @@ class HomeScreenUiState(
 }
 
 @Composable
-fun HomeScreen(products: List<Product>) {
+fun HomeScreen(
+    viewModel: HomeScreenViewModel,
+    products: List<Product>
+) {
     val sections = mapOf(
         "Todos produtos" to products,
         "Promoções" to sampleDrinks + sampleCandies,
@@ -67,18 +70,7 @@ fun HomeScreen(products: List<Product>) {
         } else emptyList()
     }
 
-    val state = remember(products, text) {
-        HomeScreenUiState(
-            sections = sections,
-            filteredProducts = filteredProducts,
-            products = products,
-            searchText = text,
-            onSearchChange = {
-                text = it
-            }
-        )
-    }
-
+    val state = viewModel.uiState
     HomeScreen(state = state)
 }
 
