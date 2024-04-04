@@ -15,7 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -38,16 +38,13 @@ fun CardProductItem(
     elevation: Dp = 4.dp,
     isExpanded: Boolean = false
 ) {
-    var expanded by remember {
+    var expanded by rememberSaveable {
         mutableStateOf(isExpanded)
     }
     Card(
-        modifier
-            .fillMaxWidth()
-            .heightIn(150.dp)
-            .clickable { expanded = !expanded },
+        modifier.fillMaxWidth().heightIn(150.dp).clickable { expanded = !expanded },
         elevation = CardDefaults.cardElevation(
-            defaultElevation = 10.dp
+            defaultElevation = elevation
         )
     ) {
 
@@ -55,16 +52,12 @@ fun CardProductItem(
             AsyncImage(
                 model = product.image,
                 contentDescription = null,
-                Modifier
-                    .fillMaxWidth()
-                    .height(100.dp),
+                Modifier.fillMaxWidth().height(100.dp),
                 placeholder = painterResource(id = R.drawable.placeholder_image),
                 contentScale = ContentScale.Crop
             )
             Column(
-                Modifier
-                    .fillMaxWidth()
-                    .background(MaterialTheme.colorScheme.inversePrimary)
+                Modifier.fillMaxWidth().background(MaterialTheme.colorScheme.inversePrimary)
                     .padding(16.dp)
             ) {
                 Text(
@@ -77,9 +70,7 @@ fun CardProductItem(
             if (expanded) {
                 product.description?.let {
                     Text(
-                        text = product.description,
-                        Modifier
-                            .padding(16.dp)
+                        text = product.description, Modifier.padding(16.dp)
                     )
                 }
             }
@@ -112,8 +103,7 @@ private fun CardProductItemDescriptionPreview() {
                     name = "Teste",
                     price = BigDecimal(9.99),
                     description = LoremIpsum(50).values.first(),
-                ),
-                isExpanded = true
+                ), isExpanded = true
             )
         }
     }

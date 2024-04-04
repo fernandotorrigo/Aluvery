@@ -17,15 +17,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import br.com.alura.aluvery.sampledata.sampleSections
-import com.ftorrigo.aluvery.dao.ProductDao
 import com.ftorrigo.aluvery.ui.screens.HomeScreen
-import com.ftorrigo.aluvery.ui.screens.HomeScreenUiState
+import com.ftorrigo.aluvery.ui.states.HomeScreenUiState
 import com.ftorrigo.aluvery.ui.theme.AluveryTheme
 import com.ftorrigo.aluvery.viewmodels.HomeScreenViewModel
 
 class MainActivity : ComponentActivity() {
 
-    private val dao = ProductDao()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -33,7 +31,7 @@ class MainActivity : ComponentActivity() {
                 startActivity(Intent(this, ProductFormActivity::class.java))
             }) {
                 val viewModel by viewModels<HomeScreenViewModel>()
-                HomeScreen(viewModel = viewModel, products = dao.products())
+                HomeScreen(viewModel = viewModel)
             }
         }
     }
