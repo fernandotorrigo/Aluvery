@@ -20,7 +20,7 @@ import com.ftorrigo.aluvery.ui.components.PartnersSection
 import com.ftorrigo.aluvery.ui.components.SearchTextField
 import com.ftorrigo.aluvery.ui.states.HomeScreenUiState
 import com.ftorrigo.aluvery.ui.theme.AluveryTheme
-import com.ftorrigo.aluvery.viewmodels.HomeScreenViewModel
+import com.ftorrigo.aluvery.ui.viewmodels.HomeScreenViewModel
 
 @Composable
 fun HomeScreen(

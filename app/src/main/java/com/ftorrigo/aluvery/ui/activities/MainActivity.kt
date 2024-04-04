@@ -20,7 +20,7 @@ import br.com.alura.aluvery.sampledata.sampleSections
 import com.ftorrigo.aluvery.ui.screens.HomeScreen
 import com.ftorrigo.aluvery.ui.states.HomeScreenUiState
 import com.ftorrigo.aluvery.ui.theme.AluveryTheme
-import com.ftorrigo.aluvery.viewmodels.HomeScreenViewModel
+import com.ftorrigo.aluvery.ui.viewmodels.HomeScreenViewModel
 
 class MainActivity : ComponentActivity() {
 
