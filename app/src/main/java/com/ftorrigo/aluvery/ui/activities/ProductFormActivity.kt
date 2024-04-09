@@ -23,8 +23,7 @@ class ProductFormActivity : ComponentActivity() {
 
                     ProductFormScreen(
                         viewModel = viewModel,
-                        onSaveClick = { product ->
-                            dao.save(product)
+                        onSaveClick = {
                             finish()
                         })
                 }

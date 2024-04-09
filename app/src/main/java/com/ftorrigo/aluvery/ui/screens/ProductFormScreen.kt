@@ -29,7 +29,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.ftorrigo.aluvery.R
-import com.ftorrigo.aluvery.model.Product
 import com.ftorrigo.aluvery.ui.states.ProductFormUiState
 import com.ftorrigo.aluvery.ui.theme.AluveryTheme
 import com.ftorrigo.aluvery.ui.viewmodels.ProductFormScreenViewModel
@@ -37,18 +36,22 @@ import com.ftorrigo.aluvery.ui.viewmodels.ProductFormScreenViewModel
 @Composable
 fun ProductFormScreen(
     viewModel: ProductFormScreenViewModel,
-    onSaveClick: (Product) -> Unit = {}
+    onSaveClick: () -> Unit = {}
 ) {
     val state by viewModel.uiState.collectAsState()
-
     ProductFormScreen(
-        state = state
+        state = state,
+        onSaveClick = {
+            viewModel.save()
+            onSaveClick()
+        }
     )
 }
 
 @Composable
 fun ProductFormScreen(
-    state: ProductFormUiState = ProductFormUiState()
+    state: ProductFormUiState = ProductFormUiState(),
+    onSaveClick: () -> Unit = {}
 ) {
     val url = state.url
     val name = state.name
@@ -131,7 +134,7 @@ fun ProductFormScreen(
             )
         )
         Button(
-            onClick = state.onSaveClick,
+            onClick = onSaveClick,
             Modifier.fillMaxWidth(),
         ) {
             Text(text = "Salvar")

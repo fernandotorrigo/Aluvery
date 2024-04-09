@@ -1,6 +1,8 @@
 package com.ftorrigo.aluvery.ui.viewmodels
 
 import androidx.lifecycle.ViewModel
+import com.ftorrigo.aluvery.dao.ProductDao
+import com.ftorrigo.aluvery.model.Product
 import com.ftorrigo.aluvery.ui.states.ProductFormUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -11,12 +13,13 @@ import java.text.DecimalFormat
 
 class ProductFormScreenViewModel : ViewModel() {
 
+    private val dao = ProductDao()
     private val _uiState: MutableStateFlow<ProductFormUiState> = MutableStateFlow(
         ProductFormUiState()
     )
     val uiState get() = _uiState.asStateFlow()
 
-    val formatter =
+    private val formatter =
         DecimalFormat("#.##")
 
     init {
@@ -54,6 +57,23 @@ class ProductFormScreenViewModel : ViewModel() {
                     )
                 }
             )
+        }
+    }
+
+    fun save() {
+        _uiState.value.run {
+            val convertedPrice = try {
+                BigDecimal(price)
+            } catch (e: NumberFormatException) {
+                BigDecimal.ZERO
+            }
+            val product = Product(
+                name = name,
+                image = url,
+                price = convertedPrice,
+                description = description
+            )
+            dao.save(product)
         }
     }
 
