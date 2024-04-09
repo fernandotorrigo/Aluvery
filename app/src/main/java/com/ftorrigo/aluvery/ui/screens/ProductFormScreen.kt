@@ -16,11 +16,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -33,81 +30,19 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.ftorrigo.aluvery.R
 import com.ftorrigo.aluvery.model.Product
+import com.ftorrigo.aluvery.ui.states.ProductFormUiState
 import com.ftorrigo.aluvery.ui.theme.AluveryTheme
-import java.math.BigDecimal
-import java.text.DecimalFormat
-
-class ProductFormUiState(
-    val url: String = "",
-    val name: String = "",
-    val price: String = "",
-    val description: String = "",
-    val isShowPreview: Boolean = url.isNotBlank(),
-    val onUrlChange: (String) -> Unit = {},
-    val onNameChange: (String) -> Unit = {},
-    val onDescriptionChange: (String) -> Unit = {},
-    val onPriceChange: (String) -> Unit = {},
-    val onSaveClick: () -> Unit = {},
-)
+import com.ftorrigo.aluvery.ui.viewmodels.ProductFormScreenViewModel
 
 @Composable
 fun ProductFormScreen(
+    viewModel: ProductFormScreenViewModel,
     onSaveClick: (Product) -> Unit = {}
 ) {
-    var name by rememberSaveable {
-        mutableStateOf("")
-    }
-    var url by rememberSaveable {
-        mutableStateOf("")
-    }
-    var price by rememberSaveable {
-        mutableStateOf("")
-    }
-    var description by rememberSaveable {
-        mutableStateOf("")
-    }
-    val formatter = remember {
-        DecimalFormat("#.##")
-    }
+    val state by viewModel.uiState.collectAsState()
+
     ProductFormScreen(
-        state = ProductFormUiState(
-            url = url,
-            name = name,
-            price = price,
-            description = description,
-            onUrlChange = {
-                url = it
-            },
-            onNameChange = {
-                name = it
-            },
-            onPriceChange = {
-                try {
-                    price = formatter.format(BigDecimal(it))
-                } catch (e: IllegalArgumentException) {
-                    if (it.isBlank()) {
-                        price = it
-                    }
-                }
-            },
-            onDescriptionChange = {
-                description = it
-            },
-            onSaveClick = {
-                val convertedPrice = try {
-                    BigDecimal(price)
-                } catch (e: NumberFormatException) {
-                    BigDecimal.ZERO
-                }
-                val product = Product(
-                    name = name,
-                    image = url,
-                    price = convertedPrice,
-                    description = description
-                )
-                onSaveClick(product)
-            }
-        )
+        state = state
     )
 }
 

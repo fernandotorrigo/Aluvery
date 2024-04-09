@@ -42,7 +42,10 @@ fun CardProductItem(
         mutableStateOf(isExpanded)
     }
     Card(
-        modifier.fillMaxWidth().heightIn(150.dp).clickable { expanded = !expanded },
+        modifier
+            .fillMaxWidth()
+            .heightIn(150.dp)
+            .clickable { expanded = !expanded },
         elevation = CardDefaults.cardElevation(
             defaultElevation = elevation
         )
@@ -52,12 +55,16 @@ fun CardProductItem(
             AsyncImage(
                 model = product.image,
                 contentDescription = null,
-                Modifier.fillMaxWidth().height(100.dp),
+                Modifier
+                    .fillMaxWidth()
+                    .height(100.dp),
                 placeholder = painterResource(id = R.drawable.placeholder_image),
                 contentScale = ContentScale.Crop
             )
             Column(
-                Modifier.fillMaxWidth().background(MaterialTheme.colorScheme.inversePrimary)
+                Modifier
+                    .fillMaxWidth()
+                    .background(MaterialTheme.colorScheme.inversePrimary)
                     .padding(16.dp)
             ) {
                 Text(
