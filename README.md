@@ -6,7 +6,8 @@ App for food and drink delivery in general..
 
 Aluvery presents a catalog of varied products such as food, sweets, drinks, etc. Also, it allows you to perform searches to search for desired products from a text field.
 
-![Aluvery demonstration](PREVIEW HERE)
+## 🔨 Aluvery demonstration
+![191754098-cd2b5c5c-54b2-4bae-8d92-28f0d4faa924](https://github.com/fernandotorrigo/Aluvery/assets/19911585/374e6aab-1705-4630-a277-64f042b6a7ed)
 
 ## ✔️ Techniques and technologies used
 
