@@ -22,7 +22,7 @@ We use the following techniques and technologies:
 - `Filter implementation`: conscious use of computational codes within composables
 - `State Hoisting`: technique for reusing composables that need state management allowing the invoker to be responsible for the state
 
-## 🛠️ Abrir e rodar o projeto
+## 🛠️ Open and run the project
 
 After downloading the project, you can open it with Android Studio. To do this, on the launcher screen click on:
 
